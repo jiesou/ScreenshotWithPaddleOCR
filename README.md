@@ -1,6 +1,6 @@
 # Screenshot with PaddleOCR
 
-[中文](/#中文)
+[中文](#中文)
 
 One-Click Screenshot OCR Suite for Linux Desktop
 
