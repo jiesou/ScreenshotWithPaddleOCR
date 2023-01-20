@@ -10,11 +10,11 @@ Based on [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and Docker
 
 ### 0. Clone repository
 
-```
+```shell
 sudo apt install git # Ubuntu/Debian
 git clone https://github.com/jiesou/ScreenshotWithPaddleOCR
 cd ScreenshotWithPaddleOCR
-`` `
+```
 
 ### 1. Dependency environment
 
@@ -37,7 +37,7 @@ Run
 
 You can use the GUI to bind scripts to set shortcuts: !
 
-! [GUI](https://user-images.githubusercontent.com/84175239/213644404-a0762776-e068-423b-861d-e0a37eb381a3.png)
+![GUI](https://user-images.githubusercontent.com/84175239/213644404-a0762776-e068-423b-861d-e0a37eb381a3.png)
 
 You can also use the command line
 
@@ -65,7 +65,7 @@ This does not require a pip dependency
 
 ### 0. 克隆存储库
 
-```
+```shell
 sudo apt install git # Ubuntu/Debian
 git clone https://github.com/jiesou/ScreenshotWithPaddleOCR
 cd ScreenshotWithPaddleOCR
