@@ -23,7 +23,7 @@ Install [Docker](https://docs.docker.com/engine/install/)
 Then run
 
 ```shell
-sudo apt install gnome-screenshot # Ubuntu/Debian
+sudo apt install gnome-screenshot xclip # Ubuntu/Debian
 pip install -r requirements.txt
 ```
 
@@ -53,7 +53,7 @@ Run screenshot.py to trigger a screenshot, which will notify you when the recogn
 
 You can also use a shell script to trigger an OCR screenshot, but it may not work in some cases
 
-This does not require a pip dependency, but does require an additional installation of xclip: `sudo apt install xclip`
+This does not require a pip dependency
 
 ## 中文
 
@@ -78,7 +78,7 @@ cd ScreenshotWithPaddleOCR
 然后运行
 
 ```shell
-sudo apt install gnome-screenshot # Ubuntu/Debian
+sudo apt install gnome-screenshot xclip # Ubuntu/Debian
 pip install -r requirements.txt
 ```
 
@@ -108,4 +108,4 @@ pip install -r requirements.txt
 
 你也可使用 Shell 脚本来触发 OCR 截图，但某些情况可能没法用
 
-这不需要安装 pip 依赖，但需要额外安装 xclip：`sudo apt install xclip`
+这不需要安装 pip 依赖
