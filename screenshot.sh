@@ -1,17 +1,18 @@
-#!/bin/bash 
-# Dependencies: docker gnome-screenshot xclip
+#!/bin/bash
 
-temp=/tmp/temp
+temp=./temp.png
 
 gnome-screenshot -a -f $temp.png
 
 # If the docker container is not running, start it.
-if  [[ ! $(docker ps -q -f name=^paddleocr$) ]];  then 
+if  [[ ! $(docker ps -q -f name=^paddleocr$) ]];  then
+    notify-send -e "OCR" "Starting docker container"
     docker run --name paddleocr -idt paddleocr
 fi
 
-docker cp $temp.png paddleocr:/app
+docker cp $temp paddleocr:/app
+docker exec -it paddleocr python3 -m ocr | xclip -sel c
 
-docker exec -it paddleocr python3 -m ocr  | xclip -i && notify-send -e "OCR" "Copied to clipboard"
+notify-send -e "OCR" "Copied to clipboard"
 
 exit
