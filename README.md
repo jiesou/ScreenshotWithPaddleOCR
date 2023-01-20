@@ -31,11 +31,13 @@ pip install -r requirements.txt
 
 Run
 
-`docker build -t paddleocr .`
+```shell
+docker build -t paddleocr .
+```
 
 ### 3. Set shortcuts
 
-You can use the GUI to bind scripts to set shortcuts: !
+You can use the GUI to bind scripts to set shortcuts:
 
 ![GUI](https://user-images.githubusercontent.com/84175239/213644404-a0762776-e068-423b-861d-e0a37eb381a3.png)
 
@@ -86,7 +88,9 @@ pip install -r requirements.txt
 
 运行
 
-`docker build -t paddleocr .`
+```shell
+docker build -t paddleocr .
+```
 
 ### 3. 设置快捷键
 
