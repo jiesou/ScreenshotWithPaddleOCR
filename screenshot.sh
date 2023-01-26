@@ -10,7 +10,7 @@ if  [[ ! $(docker ps -q -f name=^paddleocr$) ]];  then
     docker run --name paddleocr -idt paddleocr | docker start paddleocr
 fi
 
-docker cp $temp paddleocr:~
+docker cp $temp paddleocr:/app
 docker exec -it paddleocr python3 -m ocr | xclip -sel c
 
 notify-send -e "OCR" "Copied to clipboard"

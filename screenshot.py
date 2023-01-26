@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
-import os, io, tarfile
+import os, io, tarfile, re
 
 import docker
 import pyperclip
@@ -29,13 +29,13 @@ with tarfile.open(fileobj=stream, mode='w') as tar, open(temp, 'rb') as f:
     info = tar.gettarinfo(fileobj=f)
     info.name = os.path.basename(temp)
     tar.addfile(info, f)
-container.put_archive("~", stream.getvalue())
+container.put_archive("/app", stream.getvalue())
 
 # run OCR
-result = container.exec_run('python3 -m ocr')
+result = container.exec_run('python3 -m ocr').output.decode('utf-8')
 
 # copy OCR result to clipboard
-pyperclip.copy(result.output.decode('utf-8'))
+pyperclip.copy(re.sub(r"\s*$", r"", result))
 
 # send notification
 subprocess.run(["notify-send", "-e", "OCR", "Copied to clipboard"])
