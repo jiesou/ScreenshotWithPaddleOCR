@@ -29,7 +29,7 @@ with tarfile.open(fileobj=stream, mode='w') as tar, open(temp, 'rb') as f:
     info = tar.gettarinfo(fileobj=f)
     info.name = os.path.basename(temp)
     tar.addfile(info, f)
-container.put_archive("/app", stream.getvalue())
+container.put_archive("~", stream.getvalue())
 
 # run OCR
 result = container.exec_run('python3 -m ocr')

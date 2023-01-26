@@ -1,6 +1,6 @@
 #!/bin/bash
 
-temp=./temp.png
+temp=/tmp/temp.png
 
 gnome-screenshot -a -f $temp.png
 
@@ -10,7 +10,7 @@ if  [[ ! $(docker ps -q -f name=^paddleocr$) ]];  then
     docker run --name paddleocr -idt paddleocr | docker start paddleocr
 fi
 
-docker cp $temp paddleocr:/app
+docker cp $temp paddleocr:~
 docker exec -it paddleocr python3 -m ocr | xclip -sel c
 
 notify-send -e "OCR" "Copied to clipboard"
