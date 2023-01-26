@@ -32,7 +32,7 @@ pip install -r requirements.txt
 Run
 
 ```shell
-docker build -t paddleocr .
+docker build --tag paddleocr .
 ```
 
 ### 3. Set shortcuts
