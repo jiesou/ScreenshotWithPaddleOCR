@@ -15,9 +15,9 @@ def main():
     text = re.sub(r"(\S)\n", r"\1", text)
 
     # add spaces around english words and others characters
-    text = re.sub(r"([^a-zA-Z0-9,\.\?!;:'\"()，。？！；：、“”（）\s])([a-zA-Z0-9,\.\?!;])",
+    text = re.sub(r"([^a-zA-Z0-9,\.?!;:'\"%+~\-\_=/\()，。？！；：、\s])([a-zA-Z0-9,\.\?!;])",
                 r"\1 \2", text)
-    text = re.sub(r"([a-zA-Z0-9,\.?!;])([^a-zA-Z0-9,\.\?!;:'\"()，。？！；：、“”（）\s])",
+    text = re.sub(r"([a-zA-Z0-9,\.\?!;])([^a-zA-Z0-9,\.?!;:'\"%+~\-\_=/\()，。？！；：、\s])",
                 r"\1 \2", text)
     print(text)
 
