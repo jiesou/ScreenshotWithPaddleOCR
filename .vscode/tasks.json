@@ -6,7 +6,7 @@
 			"label": "docker-build",
 			"platform": "python",
 			"dockerBuild": {
-				"tag": "screenshotwithocr:latest",
+				"tag": "paddleocr:latest",
 				"dockerfile": "${workspaceFolder}/Dockerfile",
 				"context": "${workspaceFolder}",
 				"pull": true
@@ -18,6 +18,15 @@
 			"dependsOn": [
 				"docker-build"
 			],
+			"dockerRun": {
+				"volumes": [
+					{
+						"localPath": "/var/lib/docker/volumes/paddleocr/_data",
+						"containerPath": "/root/.paddleocr",
+						"permissions": "rw"
+					}
+				]
+			},
 			"python": {
 				"module": "ocr"
 			}

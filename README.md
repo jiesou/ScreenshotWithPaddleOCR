@@ -45,7 +45,9 @@ You can also use the command line
 
 The repository comes with a command line script for setting shortcuts in the GNOME environment ([source](https://askubuntu.com/a/597414))
 
-e.g. `python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t`
+```shell
+python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t
+```
 
 ## Use
 
@@ -56,6 +58,18 @@ Run screenshot.py to trigger a screenshot, which will notify you when the recogn
 You can also use a shell script to trigger an OCR screenshot, but it may not work in some cases
 
 This does not require a pip dependency
+
+## Debug
+
+To debug Python in Docker, you can use the Docker plugin in VSCode, refer to [documentation](https://code.visualstudio.com/docs/containers/overview)
+
+ The repository has been set up with the appropriate debugging options, and you need to create a Volumes to temporarily cache the downloaded model files
+
+```shell
+docker volume create paddleocr
+```
+
+Then change the `tasks.dockerRun.volumes.localPath` in `.vscode/tasks.json` to the path of your volume
 
 ## 中文
 
@@ -102,7 +116,9 @@ docker build -t paddleocr .
 
 存储库附带了一个设置 GNOME 环境下设置快捷键的命令行脚本（[来源](https://askubuntu.com/a/597414)）
 
-如 `python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t`
+```shell
+python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t
+```
 
 ## 使用
 
@@ -113,3 +129,15 @@ docker build -t paddleocr .
 你也可使用 Shell 脚本来触发 OCR 截图，但某些情况可能没法用
 
 这不需要安装 pip 依赖
+
+## 调试
+
+要调试 Docker 中的 Python，你可以使用 VSCode 中的 Docker 插件，参考[文档](https://code.visualstudio.com/docs/containers/overview)
+
+ 存储库已设置了合适的调试选项，你需要创建一个 Volumes 来临时缓存下载的模型文件
+
+```shell
+docker volume create paddleocr
+```
+
+然后修改在 `.vscode/tasks.json` 中的 `tasks.dockerRun.volumes.localPath` 内容为你 volume 的路径
