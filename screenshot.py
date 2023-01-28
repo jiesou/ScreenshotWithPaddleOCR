@@ -16,7 +16,7 @@ client = docker.from_env()
 if not client.containers.list(filters={'name': 'paddleocr'}):
     subprocess.run(["notify-send", "-e", "OCR", "Starting docker container"])
     try:
-        client.containers.run("paddleocr", detach=True, name="paddleocr")
+        client.containers.run("paddleocr", detach=True, tty=True, name="paddleocr")
     except docker.errors.APIError:
         client.containers.get('paddleocr').start()
 
