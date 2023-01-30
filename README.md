@@ -51,6 +51,10 @@ python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/scre
 
 ## 使用
 
+```shell
+python3 screenshot.py
+```
+
 运行 screenshot.py 即触发截图，完成识别后将通知提示，识别内容自动复制到剪切板
 
 ### 命令行参数
@@ -71,7 +75,7 @@ python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/scre
 
 ### Shell 脚本
 
-你也可使用 Shell 脚本（位于 scripts/screenshot.sh）来触发 OCR 截图，它是对 screenshot.py 的 Shell 重新实现
+你也可使用 Shell 脚本（位于 scripts/screenshot.sh）来触发 OCR 截图，它是对 screenshot.py 在的 Shell 重新实现
 
 会缺失部分功能（如设置语言），某些情况可能没法用 Shell 脚本
 
