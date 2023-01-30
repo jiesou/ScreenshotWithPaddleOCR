@@ -6,9 +6,9 @@ import docker
 import pyperclip
 
 # parse args
-parser = argparse.ArgumentParser(description="Screenshot with OCR, needn't any arguments")
+parser = argparse.ArgumentParser(description="Screenshot with OCR, see https://github.com/jiesou/ScreenshotWithPaddleOCR")
 parser.add_argument("-l", "--lang", default="ch",
-    help="OCR Language, see: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/multi_languages_en.md#5-support-languages-and-abbreviations")
+    help="set ocr language")
 args = parser.parse_args()
 
 temp = "/tmp/temp.png"

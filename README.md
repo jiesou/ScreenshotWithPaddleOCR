@@ -1,77 +1,6 @@
 # Screenshot with PaddleOCR
 
-[中文](#中文)
-
 One-Click Screenshot OCR Suite for Linux Desktop
-
-Based on [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) and Docker
-
-## Installation
-
-### 0. Clone repository
-
-```shell
-sudo apt install git # Ubuntu/Debian
-git clone https://github.com/jiesou/ScreenshotWithPaddleOCR
-cd ScreenshotWithPaddleOCR
-```
-
-### 1. Dependency environment
-
-Install [Docker](https://docs.docker.com/engine/install/)
-
-Then run
-
-```shell
-sudo apt install gnome-screenshot xclip # Ubuntu/Debian
-pip install -r requirements.txt
-```
-
-### 2. Build the Docker image
-
-Run
-
-```shell
-docker build --tag paddleocr .
-```
-
-### 3. Set shortcuts
-
-You can use the GUI to bind scripts to set shortcuts:
-
-![GUI](https://user-images.githubusercontent.com/84175239/213644404-a0762776-e068-423b-861d-e0a37eb381a3.png)
-
-You can also use the command line
-
-The repository comes with a command line script for setting shortcuts in the GNOME environment ([source](https://askubuntu.com/a/597414))
-
-```shell
-python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t
-```
-
-## Use
-
-Run screenshot.py to trigger a screenshot, which will notify you when the recognition is done and automatically copy the content to the clipboard
-
-### Shell script
-
-You can also use a shell script to trigger an OCR screenshot, but it may not work in some cases
-
-This does not require a pip dependency
-
-## Debug
-
-To debug Python in Docker, you can use the Docker plugin in VSCode, refer to [documentation](https://code.visualstudio.com/docs/containers/overview)
-
- The repository has been set up with the appropriate debugging options, and you need to create a Volumes to temporarily cache the downloaded model files
-
-```shell
-docker volume create paddleocr
-```
-
-Then change the `tasks.dockerRun.volumes.localPath` in `.vscode/tasks.json` to the path of your volume
-
-## 中文
 
 适用于 Linux 桌面环境的一键截图 OCR 套件
 
@@ -117,27 +46,73 @@ docker build -t paddleocr .
 存储库附带了一个设置 GNOME 环境下设置快捷键的命令行脚本（[来源](https://askubuntu.com/a/597414)）
 
 ```shell
-python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t
+python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t'
 ```
 
 ## 使用
 
 运行 screenshot.py 即触发截图，完成识别后将通知提示，识别内容自动复制到剪切板
 
+### 命令行参数
+
+你可以使用 `-h` 或 `--help` 来查看所有参数的使用说明，即：
+
+```shell
+./screenshot.py -h
+```
+
+#### 语言
+
+```shell
+--lang LANG
+```
+
+指定 OCR 识别的语言，可用项参考 [PaddleOCR 文档](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/multi_languages_en.md#5-support-languages-and-abbreviations)。使用新语言时会自动下载对应模型，只要 Docker Container 不被移除模型就不用重新下载
+
 ### Shell 脚本
 
-你也可使用 Shell 脚本来触发 OCR 截图，但某些情况可能没法用
+你也可使用 Shell 脚本（位于 scripts/screenshot.sh）来触发 OCR 截图，它是对 screenshot.py 的 Shell 重新实现
+
+会缺失部分功能（如设置语言），某些情况可能没法用 Shell 脚本
 
 这不需要安装 pip 依赖
+
+## 卸载
+
+```shell
+cd scripts
+bash uninstall.sh
+```
+
+将会自动删除相关处理 OCR 的 Docker 内容，并删除目录
+
+但它不会将你设置的键盘快捷键和本脚本需要的其它依赖移除
+
+如果你要移除相关依赖，可以用包管理器来完成
+
+```shell
+sudo apt autoremove --purge gnome-screenshot xclip # Ubuntu/Debian
+pip uninstall -r requirements.txt
+```
+
+但请注意，其它程序也有可能使用这些依赖，这可能导致其它程序被破坏，甚至系统损坏，**十分危险**。运行前请先确保你知道你在干什么
 
 ## 调试
 
 要调试 Docker 中的 Python，你可以使用 VSCode 中的 Docker 插件，参考[文档](https://code.visualstudio.com/docs/containers/overview)
 
- 存储库已设置了合适的调试选项，你需要创建一个 Volumes 来临时缓存下载的模型文件
+ 存储库已设置了合适的调试选项，你需要创建一个 Volumes 来临时存储下载的模型文件，避免每次都要重新下
 
 ```shell
 docker volume create paddleocr
 ```
 
 然后修改在 `.vscode/tasks.json` 中的 `tasks.dockerRun.volumes.localPath` 内容为你 volume 的路径
+
+scripts 文件夹中的脚本可能有所帮助，例如
+
+```shell
+./scripts/reinstall.sh && python3 screenshot.py
+```
+
+就能重新安装并运行 screenshot.py
