@@ -1,8 +1,8 @@
 from paddleocr import PaddleOCR
-import re
+import re, sys
 
 def main():
-    ocr = PaddleOCR(use_angle_cls = True, use_gpu= False, show_log = False)
+    ocr = PaddleOCR(use_angle_cls = True, use_gpu= False, show_log = False, lang=sys.argv[1] if len(sys.argv) > 1 else "ch")
     result = ocr.ocr("temp.png", cls=True)
     text = "\n".join([line[1][0] for line in result[0]])
 

@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 import subprocess
-import os, io, tarfile, re
+import os, io, tarfile, re, argparse
 
 import docker
 import pyperclip
+
+# parse args
+parser = argparse.ArgumentParser(description="Screenshot with OCR, needn't any arguments")
+parser.add_argument("-l", "--lang", default="ch",
+    help="OCR Language, see: https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/multi_languages_en.md#5-support-languages-and-abbreviations")
+args = parser.parse_args()
 
 temp = "/tmp/temp.png"
 
@@ -32,7 +38,7 @@ with tarfile.open(fileobj=stream, mode='w') as tar, open(temp, 'rb') as f:
 container.put_archive("/app", stream.getvalue())
 
 # run OCR
-result = container.exec_run('python3 -m ocr').output.decode('utf-8')
+result = container.exec_run(f'python3 -m ocr {args.lang}').output.decode('utf-8')
 
 # copy OCR result to clipboard
 pyperclip.copy(re.sub(r"\s*$", r"", result))

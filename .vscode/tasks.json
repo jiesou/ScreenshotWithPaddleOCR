@@ -28,7 +28,8 @@
 				]
 			},
 			"python": {
-				"module": "ocr"
+				"module": "ocr",
+				"args": ["ch"]
 			}
 		}
 	]
