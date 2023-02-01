@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
-import os, io, tarfile, re, argparse
+import os, io, tarfile, re, argparse, asyncio
 
 import docker
 import pyperclip
@@ -11,7 +11,7 @@ parser.add_argument("-l", "--lang", default="ch", help="set ocr language")
 args = parser.parse_args()
 
 def sendNotify(msg):
-    subprocess.run(["notify-send", "-e", "OCR", msg])
+        subprocess.run(["notify-send", "-e", "OCR", msg])
 
 
 client = docker.from_env()
@@ -29,7 +29,7 @@ if container.status != "running":
 temp = "/tmp/temp.png"
 
 # use gnome screenshot to capture image
-subprocess.run(["gnome-screenshot", "-a", "-f", temp])
+subprocess.Popen(["gnome-screenshot", "-a", "-f", temp]).communicate()
 
 
 # tar image to send to docker container
@@ -44,9 +44,10 @@ except AttributeError:
     exit()
 
 # run OCR
-result = container.exec_run(f'python3 -m ocr {args.lang}').output.decode('utf-8')
+result =  container.exec_run(f'python3 -m ocr {args.lang}').output.decode('utf-8')
 
 # copy OCR result to clipboard
 pyperclip.copy(re.sub(r"\s*$", r"", result))
 
 sendNotify("Copied to clipboard")
+
