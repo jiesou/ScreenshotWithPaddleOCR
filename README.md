@@ -26,11 +26,13 @@ cd ScreenshotWithPaddleOCR
 sudo apt install gnome-screenshot xclip # Ubuntu/Debian
 ```
 
-建议使用 venv 隔离环境
+建议在 venv 隔离环境中安装 pip 依赖
 
 ```shell
 python3 -m venv .
 source bin/activate
+pip install -r requirements.txt
+deactivate
 ```
 
 ### 2. 构建&运行 Docker
@@ -39,7 +41,7 @@ source bin/activate
 
 ```shell
 docker build -t paddleocr .
-docker run --name paddleocr -idt -v ./app/:/root/ paddleocr
+docker run  -v ./app/:/root/ --name paddleocr -idt paddleocr
 ```
 
 ### 3. 设置快捷键
@@ -53,7 +55,7 @@ docker run --name paddleocr -idt -v ./app/:/root/ paddleocr
 存储库附带了一个设置 GNOME 环境下设置快捷键的命令行脚本（[来源](https://askubuntu.com/a/597414)）
 
 ```shell
-python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py
+python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'source /PATH/TO/bin/activate && python PATH/TO/screenshot.py
 ' '<Super><Shift>t'
 ```
 
@@ -83,11 +85,11 @@ python3 screenshot.py
 
 你可以将不同语言绑定到不同快捷键上，例如：
 ```shell
-python3 set_customshortcut.py 'Screenshot with PaddleOCR (Chinese)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l chi
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Chinese)' 'source /PATH/TO/bin/activate && python PATH/TO/screenshot.py -l chi
 ' '<Super><Shift>t'
-python3 set_customshortcut.py 'Screenshot with PaddleOCR (Engilsh)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l en
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Engilsh)' 'source /PATH/TO/bin/activate && python PATH/TO/screenshot.py -l en
 ' '<Super><Alt>t'
-python3 set_customshortcut.py 'Screenshot with PaddleOCR (Japanese)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l japan
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Japanese)' 'source /PATH/TO/bin/activate && python PATH/TO/screenshot.py -l japan
 ' '<Super><Ctrl>t'
 ```
 
