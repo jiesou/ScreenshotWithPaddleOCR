@@ -24,15 +24,22 @@ cd ScreenshotWithPaddleOCR
 
 ```shell
 sudo apt install gnome-screenshot xclip # Ubuntu/Debian
-pip install -r requirements.txt
 ```
 
-### 2. 构建 Docker 镜像
+建议使用 venv 隔离环境
+
+```shell
+python3 -m venv .
+source bin/activate
+```
+
+### 2. 构建&运行 Docker
 
 运行
 
 ```shell
 docker build -t paddleocr .
+docker run --name paddleocr -idt -v ./app/:/root/ paddleocr
 ```
 
 ### 3. 设置快捷键
@@ -46,7 +53,8 @@ docker build -t paddleocr .
 存储库附带了一个设置 GNOME 环境下设置快捷键的命令行脚本（[来源](https://askubuntu.com/a/597414)）
 
 ```shell
-python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'python3 /path/to/screenshot.py' '<Super><Shift>t'
+python3 set_customshortcut.py 'Screenshot with PaddleOCR' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py
+' '<Super><Shift>t'
 ```
 
 ## 使用
@@ -73,9 +81,19 @@ python3 screenshot.py
 
 指定 OCR 识别的语言，可用项参考 [PaddleOCR 文档](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/multi_languages_en.md#5-support-languages-and-abbreviations)。使用新语言时会自动下载对应模型，只要 Docker Container 不被移除模型就不用重新下载
 
+你可以将不同语言绑定到不同快捷键上，例如：
+```shell
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Chinese)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l chi
+' '<Super><Shift>t'
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Engilsh)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l en
+' '<Super><Alt>t'
+python3 set_customshortcut.py 'Screenshot with PaddleOCR (Japanese)' 'source /PATH/TO/bin/activate && pythonPATH/TO/screenshot.py -l japan
+' '<Super><Ctrl>t'
+```
+
 ### Shell 脚本
 
-你也可使用 Shell 脚本（位于 scripts/screenshot.sh）来触发 OCR 截图，它是对 screenshot.py 在的 Shell 重新实现
+你也可使用 Shell 脚本（位于 scripts/screenshot.sh）来触发 OCR 截图，它是对 screenshot.py 在 Shell 的重新实现
 
 会缺失部分功能（如设置语言），某些情况可能没法用 Shell 脚本
 
@@ -84,8 +102,7 @@ python3 screenshot.py
 ## 卸载
 
 ```shell
-cd scripts
-bash uninstall.sh
+sh scripts/uninstall.sh
 ```
 
 将会自动删除相关处理 OCR 的 Docker 内容，并删除目录
@@ -96,7 +113,6 @@ bash uninstall.sh
 
 ```shell
 sudo apt autoremove --purge gnome-screenshot xclip # Ubuntu/Debian
-pip uninstall -r requirements.txt
 ```
 
 但请注意，其它程序也有可能使用这些依赖，这可能导致其它程序被破坏，甚至系统损坏，**十分危险**。运行前请先确保你知道你在干什么
@@ -105,13 +121,7 @@ pip uninstall -r requirements.txt
 
 要调试 Docker 中的 Python，你可以使用 VSCode 中的 Docker 插件，参考[文档](https://code.visualstudio.com/docs/containers/overview)
 
- 存储库已设置了合适的调试选项，你需要创建一个 Volumes 来临时存储下载的模型文件，避免每次都要重新下
-
-```shell
-docker volume create paddleocr
-```
-
-然后修改在 `.vscode/tasks.json` 中的 `tasks.dockerRun.volumes.localPath` 内容为你 volume 的路径
+存储库已设置了合适的调试选项，修改在 `.vscode/tasks.json` 中的 `tasks.dockerRun.volumes.localPath` 内容为你本地 volume 的路径（项目根目录）即可
 
 scripts 文件夹中的脚本可能有所帮助，例如
 

@@ -31,7 +31,6 @@ temp = "/tmp/temp.png"
 # use gnome screenshot to capture image
 subprocess.Popen(["gnome-screenshot", "-a", "-f", temp]).communicate()
 
-
 # tar image to send to docker container
 stream = io.BytesIO()
 with tarfile.open(fileobj=stream, mode='w') as tar, open(temp, 'rb') as f:

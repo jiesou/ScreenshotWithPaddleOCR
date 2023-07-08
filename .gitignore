@@ -1,0 +1,10 @@
+app/.paddleocr
+app/.cache
+
+pyvenv.cfg
+venv.sh
+.venv/**
+bin
+lib
+lib64
+include
